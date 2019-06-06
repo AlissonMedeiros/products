@@ -1,11 +1,11 @@
 package com.zero2one.products.controller;
 
 import com.zero2one.products.model.Product;
-import java.util.ArrayList;
+import com.zero2one.products.reposioty.ProductRepository;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/products")
 public class ProductsController {
+
+    @Autowired
+    private ProductRepository productRepository;
 
     private Map<String, Product> products = new HashMap<>();
 
@@ -38,7 +41,7 @@ public class ProductsController {
 
     @GetMapping
     public Collection<Product> get() {
-        return products.values();
+        return productRepository.findAll();
     }
 
     @GetMapping("/{id}")
