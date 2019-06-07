@@ -50,8 +50,4 @@ public class Product {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-    public void setPrice(Double price, Double price2) {
-        this.price = price + price2;
-    }
 }
