@@ -31,12 +31,16 @@ public class ProductsApplication {
 		return new CommandLineRunner() {
 			@Override
 			public void run(String... args) throws Exception {
-				User manuel = new User("usuario1", passwordEncoder.encode("1"), Lists.newArrayList(new SimpleGrantedAuthority("USER")));
-				User maria = new User("usuario2", passwordEncoder.encode("2"), Lists.newArrayList(new SimpleGrantedAuthority("USER")));
-				User toni = new User("usuario3", passwordEncoder.encode("3"), Lists.newArrayList(new SimpleGrantedAuthority("USER")));
-				jdbcUserDetailsManager.createUser(manuel);
-				jdbcUserDetailsManager.createUser(maria);
-				jdbcUserDetailsManager.createUser(toni);
+				try {
+					User manuel = new User("usuario1", passwordEncoder.encode("1"), Lists.newArrayList(new SimpleGrantedAuthority("USER")));
+					User maria = new User("usuario2", passwordEncoder.encode("2"), Lists.newArrayList(new SimpleGrantedAuthority("USER")));
+					User toni = new User("usuario3", passwordEncoder.encode("3"), Lists.newArrayList(new SimpleGrantedAuthority("USER")));
+					jdbcUserDetailsManager.createUser(manuel);
+					jdbcUserDetailsManager.createUser(maria);
+					jdbcUserDetailsManager.createUser(toni);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		};
 	}
