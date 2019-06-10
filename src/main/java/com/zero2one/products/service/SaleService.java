@@ -2,6 +2,7 @@ package com.zero2one.products.service;
 
 import com.zero2one.products.model.Item;
 import com.zero2one.products.model.Sale;
+import com.zero2one.products.reposioty.ItemRepository;
 import com.zero2one.products.reposioty.SaleRepository;
 import java.util.Collection;
 import java.util.List;
@@ -12,18 +13,21 @@ import org.springframework.stereotype.Service;
 public class SaleService {
 
     private SaleRepository repository;
+    private ItemRepository itemRepository;
 
-    public SaleService(SaleRepository repository) {
+    public SaleService(SaleRepository repository, ItemRepository itemRepository) {
         this.repository = repository;
+        this.itemRepository = itemRepository;
     }
 
     public Sale save(Sale sale) {
+        repository.save(sale);
         List<Item> items = sale.getItems();
         for (Item item : items) {
             item.setSale(sale);
             item.setId(UUID.randomUUID().toString());
+            itemRepository.save(item);
         }
-        repository.save(sale);
         return sale;
     }
 

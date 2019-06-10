@@ -1,6 +1,9 @@
 package com.zero2one.products.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,19 +15,24 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_item")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@ApiModel("Item")
 public class Item {
 
     @Id
     @Column(name = "product_item_id")
+    @ApiModelProperty("Identificador")
     private String id;
     @Column(name = "product_item_quantity")
+    @ApiModelProperty("Quantidade")
     private Double quantity;
     @JoinColumn(name = "product_item_product_id", referencedColumnName = "product_id", updatable = true)
     @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ApiModelProperty("Produto")
     private Product product;
     @JoinColumn(name = "product_item_sale_id", referencedColumnName = "sale_id", updatable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ApiModelProperty("Venda")
+    @JsonBackReference
     private Sale sale;
 
     public String getId() {
@@ -53,5 +61,9 @@ public class Item {
 
     public void setSale(Sale sale) {
         this.sale = sale;
+    }
+
+    public Sale getSale() {
+        return sale;
     }
 }
